@@ -20,31 +20,29 @@ server.post('/users', (req, res) => {
     //check if user has a name
     //save the user
     //return the user
-    if(req.body.name && req.body.name.length > 0) {
-        database.users.save(req.body).then(function(user) {
+    if (req.body.name && req.body.name.length > 0) {
+        database.users.save(req.body).then(function (user) {
             res.status(201).json(user);
         });
     } else {
-        res.status(400).json({ message: 'The user must have a name'});
+        res.status(400).json({ message: 'The user must have a name' });
     }
 });
 
-    server.get('/users', (req, res) => {
-        database.users.find().then(function(users) {
-            res.status(200).send(users);
-        })
-    });
+server.get('/users', (req, res) => {
+    database.users.find().then(function (users) {
+        res.status(200).send(users);
+    })
+});
 
-    // server.get('users/:id', (req, res) => {
-    //     var userId = req.params.id;
-    //     database.users.findOne({
-    //         id: userId
-    //       }, {
-    //         columns: ['name', 'age']
-    //       }).then(result => {
-    //         res.status(200).json(user);
-    //       });
-
+server.get('/users/:id', (req, res) => {
+    var id = req.params.id;
+    database.users.findOne({
+        id
+    }).then(user => {
+        res.status(200).send(user);
+    })
+});
 
 server.listen(port, () => {
     console.log(`server running on port ${port}`);
